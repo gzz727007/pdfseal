@@ -8,12 +8,12 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Privacy: 100% Client-Side](https://img.shields.io/badge/Privacy-100%25%20Local-green.svg)](#privacy-guarantee)
 [![Ko-fi](https://img.shields.io/badge/Buy%20a%20Fish-Ko--fi-ff5f5f.svg)](https://ko-fi.com/muffin27)
-[![Website](https://img.shields.io/badge/Live%20Demo-pdfseal-6366f1.svg)](https://pdfseal.gzz727007.workers.dev)
+[![Website](https://img.shields.io/badge/Live%20Demo-pdf.sealkit.org-6366f1.svg)](https://pdf.sealkit.org)
 
 </div>
 
 <p align="center">
-  <a href="https://pdfseal.gzz727007.workers.dev"><b>🌐 Open PDFSeal Live App →</b></a>
+  <a href="https://pdf.sealkit.org"><b>🌐 Open PDFSeal Live App (pdf.sealkit.org) →</b></a>
 </p>
 
 ---
