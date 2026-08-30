@@ -40,7 +40,7 @@
 
   <!-- Top Notification / Offline Bar -->
   <div id="offline-bar" class="hidden bg-emerald-700 text-white text-xs py-1.5 px-4 text-center font-medium shadow-sm transition-all duration-300">
-    <span>🛡️ Offline Mode Active: PDFSeal is processing 100% locally in your browser memory.</span>
+    <span data-i18n="offline_banner">🛡️ Offline Mode Active: PDFSeal is processing 100% locally in your browser memory.</span>
   </div>
 
   <!-- Navbar -->
@@ -54,25 +54,40 @@
           <div class="flex items-center space-x-2">
             <span class="font-extrabold text-xl text-slate-900 tracking-tight">PDFSeal</span>
             <span class="text-[11px] bg-emerald-100 text-emerald-800 border border-emerald-300 px-2 py-0.5 rounded-full font-semibold flex items-center">
-              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1 animate-ping"></span> 100% Local
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1 animate-ping"></span> <span data-i18n="local_badge">100% Local</span>
             </span>
           </div>
-          <p class="text-[11px] text-slate-500 hidden sm:block">Sealed locally in your browser memory</p>
+          <p class="text-[11px] text-slate-500 hidden sm:block" data-i18n="brand_subtitle">Sealed locally in your browser memory</p>
         </div>
       </div>
 
-      <!-- Action Buttons -->
+      <!-- Action Buttons & Language Selector -->
       <div class="flex items-center space-x-2 sm:space-x-3">
+        
+        <!-- Language Selector Dropdown -->
+        <div class="relative">
+          <select id="lang-select" onchange="changeLanguage(this.value)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold py-1.5 px-2.5 rounded-xl border border-slate-200 focus:outline-hidden focus:ring-2 focus:ring-blue-500 transition cursor-pointer appearance-none pr-7">
+            <option value="en">🇺🇸 English</option>
+            <option value="zh">🇨🇳 简体中文</option>
+            <option value="de">🇩🇪 Deutsch</option>
+            <option value="es">🇪🇸 Español</option>
+            <option value="fr">🇫🇷 Français</option>
+          </select>
+          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
+            <i data-lucide="chevron-down" class="w-3.5 h-3.5"></i>
+          </div>
+        </div>
+
         <!-- Ko-fi Support -->
         <a href="https://ko-fi.com/muffin27" target="_blank" class="flex items-center space-x-1.5 text-xs sm:text-sm bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 px-3 py-1.5 rounded-xl transition font-semibold shadow-xs">
-          <span>☕ Buy a Coffee</span>
-          <span class="hidden md:inline text-amber-700">/ 🐟 Fish</span>
+          <span data-i18n="support_coffee">☕ Buy a Coffee</span>
+          <span class="hidden md:inline text-amber-700" data-i18n="support_fish">/ 🐟 Fish</span>
         </a>
 
         <!-- Feedback Modal Trigger -->
         <button onclick="openFeedbackModal()" class="flex items-center space-x-1 text-xs sm:text-sm bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-xl transition font-medium">
           <i data-lucide="message-square" class="w-4 h-4 text-slate-500"></i>
-          <span class="hidden sm:inline">Feedback</span>
+          <span class="hidden sm:inline" data-i18n="feedback_btn">Feedback</span>
         </button>
 
         <!-- GitHub Repo -->
@@ -88,27 +103,27 @@
         
         <button onclick="switchTool('merge')" id="tab-merge" class="tool-tab active-tab flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-semibold transition whitespace-nowrap bg-white text-blue-600 shadow-xs">
           <i data-lucide="layers" class="w-4 h-4"></i>
-          <span>Merge PDFs</span>
+          <span data-i18n="tab_merge">Merge PDFs</span>
         </button>
 
         <button onclick="switchTool('organize')" id="tab-organize" class="tool-tab flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-white/60">
           <i data-lucide="layout-grid" class="w-4 h-4"></i>
-          <span>Organize & Rotate</span>
+          <span data-i18n="tab_organize">Organize & Rotate</span>
         </button>
 
         <button onclick="switchTool('split')" id="tab-split" class="tool-tab flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-white/60">
           <i data-lucide="scissors" class="w-4 h-4"></i>
-          <span>Split & Extract</span>
+          <span data-i18n="tab_split">Split & Extract</span>
         </button>
 
         <button onclick="switchTool('watermark')" id="tab-watermark" class="tool-tab flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-white/60">
           <i data-lucide="stamp" class="w-4 h-4"></i>
-          <span>Watermark & Stamp</span>
+          <span data-i18n="tab_watermark">Watermark & Stamp</span>
         </button>
 
         <button onclick="switchTool('sanitize')" id="tab-sanitize" class="tool-tab flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium transition whitespace-nowrap text-slate-600 hover:text-slate-900 hover:bg-white/60">
           <i data-lucide="shield-check" class="w-4 h-4"></i>
-          <span>Sanitize Metadata</span>
+          <span data-i18n="tab_sanitize">Sanitize Metadata</span>
         </button>
 
       </div>
@@ -123,8 +138,8 @@
     <!-- ============================================================= -->
     <section id="panel-merge" class="tool-panel">
       <div class="mb-6 text-center max-w-xl mx-auto">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Merge Multiple PDFs</h2>
-        <p class="text-sm text-slate-600 mt-1">Combine two or more PDF files into a single unified document. Drag to reorder.</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" data-i18n="merge_title">Merge Multiple PDFs</h2>
+        <p class="text-sm text-slate-600 mt-1" data-i18n="merge_desc">Combine two or more PDF files into a single unified document. Drag to reorder.</p>
       </div>
 
       <!-- Dropzone -->
@@ -133,11 +148,11 @@
         <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
           <i data-lucide="files" class="w-8 h-8"></i>
         </div>
-        <h3 class="text-base font-bold text-slate-800">Select PDF files to merge</h3>
-        <p class="text-xs text-slate-500 mt-1">or drag & drop them directly here</p>
+        <h3 class="text-base font-bold text-slate-800" data-i18n="merge_drop_title">Select PDF files to merge</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i18n="merge_drop_subtitle">or drag & drop them directly here</p>
         <button type="button" onclick="document.getElementById('merge-input').click()" class="mt-4 inline-flex items-center space-x-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
           <i data-lucide="plus" class="w-4 h-4"></i>
-          <span>Choose PDF Files</span>
+          <span data-i18n="btn_choose_files">Choose PDF Files</span>
         </button>
       </div>
 
@@ -145,14 +160,14 @@
       <div id="merge-workspace" class="hidden max-w-2xl mx-auto mt-8 bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
         <div class="flex items-center justify-between pb-4 border-b border-slate-100">
           <div>
-            <h4 class="font-bold text-slate-800 text-sm">Selected Files (<span id="merge-count">0</span>)</h4>
-            <p class="text-xs text-slate-500">Drag items to change merge sequence</p>
+            <h4 class="font-bold text-slate-800 text-sm"><span data-i18n="merge_selected_title">Selected Files</span> (<span id="merge-count">0</span>)</h4>
+            <p class="text-xs text-slate-500" data-i18n="merge_selected_hint">Drag items to change merge sequence</p>
           </div>
           <div class="flex items-center space-x-2">
-            <button onclick="document.getElementById('merge-input').click()" class="text-xs text-blue-600 hover:text-blue-700 font-semibold px-2.5 py-1 rounded-lg hover:bg-blue-50 transition">
+            <button onclick="document.getElementById('merge-input').click()" class="text-xs text-blue-600 hover:text-blue-700 font-semibold px-2.5 py-1 rounded-lg hover:bg-blue-50 transition" data-i18n="btn_add_more">
               + Add More
             </button>
-            <button onclick="clearMergeList()" class="text-xs text-rose-500 hover:text-rose-700 font-medium px-2.5 py-1 rounded-lg hover:bg-rose-50 transition">
+            <button onclick="clearMergeList()" class="text-xs text-rose-500 hover:text-rose-700 font-medium px-2.5 py-1 rounded-lg hover:bg-rose-50 transition" data-i18n="btn_clear_all">
               Clear All
             </button>
           </div>
@@ -166,10 +181,10 @@
         <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
           <div class="text-xs text-slate-500 flex items-center">
             <i data-lucide="lock" class="w-3.5 h-3.5 text-emerald-600 mr-1"></i>
-            <span>Processed locally in browser</span>
+            <span data-i18n="processed_locally">Processed locally in browser</span>
           </div>
           <button id="btn-merge-download" onclick="executeMerge()" class="bg-blue-600 hover:bg-blue-700 active:scale-95 text-white text-sm font-bold px-6 py-2.5 rounded-xl transition flex items-center space-x-2 shadow-md hover:shadow-blue-500/25">
-            <span>🦭 Seal & Merge PDFs</span>
+            <span data-i18n="seal_and_merge">🦭 Seal & Merge PDFs</span>
             <i data-lucide="download" class="w-4 h-4"></i>
           </button>
         </div>
@@ -181,8 +196,8 @@
     <!-- ============================================================= -->
     <section id="panel-organize" class="tool-panel hidden">
       <div class="mb-6 text-center max-w-xl mx-auto">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Organize, Rotate & Delete Pages</h2>
-        <p class="text-sm text-slate-600 mt-1">Interactive visual grid. Drag cards to reorder, rotate 90°, or remove pages.</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" data-i18n="organize_title">Organize, Rotate & Delete Pages</h2>
+        <p class="text-sm text-slate-600 mt-1" data-i18n="organize_desc">Interactive visual grid. Drag cards to reorder, rotate 90°, or remove pages.</p>
       </div>
 
       <!-- Dropzone -->
@@ -191,11 +206,11 @@
         <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
           <i data-lucide="layout-grid" class="w-8 h-8"></i>
         </div>
-        <h3 class="text-base font-bold text-slate-800">Select a PDF to Organize</h3>
-        <p class="text-xs text-slate-500 mt-1">Single PDF file with multiple pages</p>
+        <h3 class="text-base font-bold text-slate-800" data-i18n="organize_drop_title">Select a PDF to Organize</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i18n="organize_drop_subtitle">Single PDF file with multiple pages</p>
         <button type="button" onclick="document.getElementById('organize-input').click()" class="mt-4 inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
           <i data-lucide="file-up" class="w-4 h-4"></i>
-          <span>Choose PDF</span>
+          <span data-i18n="btn_choose_pdf">Choose PDF</span>
         </button>
       </div>
 
@@ -205,7 +220,7 @@
         <div class="bg-white rounded-2xl border border-slate-200 p-4 mb-6 shadow-xs flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center space-x-3">
             <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2.5 py-1 rounded-lg">
-              <span id="organize-page-count">0</span> Pages Total
+              <span id="organize-page-count">0</span> <span data-i18n="pages_total">Pages Total</span>
             </span>
             <span id="organize-filename" class="text-xs font-medium text-slate-600 truncate max-w-xs"></span>
           </div>
@@ -213,9 +228,9 @@
           <div class="flex items-center space-x-2">
             <button onclick="rotateAllPages(90)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-1.5 rounded-lg transition flex items-center space-x-1">
               <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
-              <span>Rotate All 90°</span>
+              <span data-i18n="rotate_all_90">Rotate All 90°</span>
             </button>
-            <button onclick="resetOrganizeWorkspace()" class="text-xs text-rose-600 hover:bg-rose-50 font-medium px-3 py-1.5 rounded-lg transition">
+            <button onclick="resetOrganizeWorkspace()" class="text-xs text-rose-600 hover:bg-rose-50 font-medium px-3 py-1.5 rounded-lg transition" data-i18n="btn_reset_file">
               Reset / Change File
             </button>
           </div>
@@ -229,10 +244,10 @@
         <!-- Floating Bottom Export Bar -->
         <div class="sticky bottom-6 mt-8 max-w-md mx-auto bg-slate-900/95 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl border border-slate-800 flex items-center justify-between z-30">
           <div class="text-xs text-slate-300">
-            <span>Ready to save changes</span>
+            <span data-i18n="ready_to_save">Ready to save changes</span>
           </div>
           <button onclick="executeOrganizeExport()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition flex items-center space-x-1.5 shadow-md">
-            <span>🦭 Seal & Download</span>
+            <span data-i18n="seal_and_download">🦭 Seal & Download</span>
             <i data-lucide="download" class="w-4 h-4"></i>
           </button>
         </div>
@@ -244,8 +259,8 @@
     <!-- ============================================================= -->
     <section id="panel-split" class="tool-panel hidden">
       <div class="mb-6 text-center max-w-xl mx-auto">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Split & Extract Pages</h2>
-        <p class="text-sm text-slate-600 mt-1">Select individual pages or enter page ranges to extract into a fresh PDF.</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" data-i18n="split_title">Split & Extract Pages</h2>
+        <p class="text-sm text-slate-600 mt-1" data-i18n="split_desc">Select individual pages or enter page ranges to extract into a fresh PDF.</p>
       </div>
 
       <!-- Dropzone -->
@@ -254,11 +269,11 @@
         <div class="w-16 h-16 bg-emerald-50 text-emerald-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
           <i data-lucide="scissors" class="w-8 h-8"></i>
         </div>
-        <h3 class="text-base font-bold text-slate-800">Select a PDF to Split</h3>
-        <p class="text-xs text-slate-500 mt-1">Extract specific pages with visual selection</p>
+        <h3 class="text-base font-bold text-slate-800" data-i18n="split_drop_title">Select a PDF to Split</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i18n="split_drop_subtitle">Extract specific pages with visual selection</p>
         <button type="button" onclick="document.getElementById('split-input').click()" class="mt-4 inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
           <i data-lucide="file-up" class="w-4 h-4"></i>
-          <span>Choose PDF</span>
+          <span data-i18n="btn_choose_pdf">Choose PDF</span>
         </button>
       </div>
 
@@ -266,16 +281,16 @@
       <div id="split-workspace" class="hidden">
         <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div class="flex-1 w-full">
-            <label class="block text-xs font-bold text-slate-700 mb-1">Custom Page Range:</label>
+            <label class="block text-xs font-bold text-slate-700 mb-1" data-i18n="custom_page_range">Custom Page Range:</label>
             <div class="flex items-center space-x-2">
               <input type="text" id="split-range-input" placeholder="e.g. 1-3, 5, 8" oninput="handleRangeInput(this.value)" class="text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 w-full max-w-xs focus:ring-2 focus:ring-emerald-500 outline-hidden">
-              <button onclick="selectAllSplitPages(true)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-2 rounded-xl transition whitespace-nowrap">Select All</button>
-              <button onclick="selectAllSplitPages(false)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-2 rounded-xl transition whitespace-nowrap">Deselect All</button>
+              <button onclick="selectAllSplitPages(true)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-2 rounded-xl transition whitespace-nowrap" data-i18n="btn_select_all">Select All</button>
+              <button onclick="selectAllSplitPages(false)" class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-2 rounded-xl transition whitespace-nowrap" data-i18n="btn_deselect_all">Deselect All</button>
             </div>
           </div>
 
           <div class="text-right">
-            <span class="text-xs text-slate-500">Selected: <strong id="split-selected-count" class="text-emerald-600 font-bold">0</strong> / <span id="split-total-count">0</span> pages</span>
+            <span class="text-xs text-slate-500"><span data-i18n="selected_label">Selected:</span> <strong id="split-selected-count" class="text-emerald-600 font-bold">0</strong> / <span id="split-total-count">0</span> <span data-i18n="pages_label">pages</span></span>
           </div>
         </div>
 
@@ -287,10 +302,10 @@
         <!-- Bottom Export -->
         <div class="sticky bottom-6 mt-8 max-w-md mx-auto bg-slate-900/95 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl border border-slate-800 flex items-center justify-between z-30">
           <div class="text-xs text-slate-300">
-            <span id="split-ready-text">Choose pages above</span>
+            <span id="split-ready-text">0 pages selected</span>
           </div>
           <button id="btn-split-download" onclick="executeSplitExport()" class="bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition flex items-center space-x-1.5 shadow-md">
-            <span>🦭 Extract Selected</span>
+            <span data-i18n="extract_selected">🦭 Extract Selected</span>
             <i data-lucide="download" class="w-4 h-4"></i>
           </button>
         </div>
@@ -302,8 +317,8 @@
     <!-- ============================================================= -->
     <section id="panel-watermark" class="tool-panel hidden">
       <div class="mb-6 text-center max-w-xl mx-auto">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Watermark & Stamp PDF</h2>
-        <p class="text-sm text-slate-600 mt-1">Stamp confidential labels, draft notices, or custom text across all pages.</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" data-i18n="watermark_title">Watermark & Stamp PDF</h2>
+        <p class="text-sm text-slate-600 mt-1" data-i18n="watermark_desc">Stamp confidential labels, draft notices, or custom text across all pages.</p>
       </div>
 
       <!-- Dropzone -->
@@ -312,11 +327,11 @@
         <div class="w-16 h-16 bg-amber-50 text-amber-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
           <i data-lucide="stamp" class="w-8 h-8"></i>
         </div>
-        <h3 class="text-base font-bold text-slate-800">Select PDF to Watermark</h3>
-        <p class="text-xs text-slate-500 mt-1">Add customized text watermark with live preview</p>
+        <h3 class="text-base font-bold text-slate-800" data-i18n="watermark_drop_title">Select PDF to Watermark</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i18n="watermark_drop_subtitle">Add customized text watermark with live preview</p>
         <button type="button" onclick="document.getElementById('watermark-input').click()" class="mt-4 inline-flex items-center space-x-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
           <i data-lucide="file-up" class="w-4 h-4"></i>
-          <span>Choose PDF</span>
+          <span data-i18n="btn_choose_pdf">Choose PDF</span>
         </button>
       </div>
 
@@ -328,36 +343,36 @@
           <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
             <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5 pb-2 border-b border-slate-100">
               <i data-lucide="sliders" class="w-4 h-4 text-amber-600"></i>
-              <span>Watermark Controls</span>
+              <span data-i18n="wm_controls">Watermark Controls</span>
             </h4>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Watermark Text</label>
+              <label class="block text-xs font-semibold text-slate-700 mb-1" data-i18n="wm_text_label">Watermark Text</label>
               <input type="text" id="wm-text" value="CONFIDENTIAL" oninput="updateWatermarkPreview()" class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-hidden font-bold">
             </div>
 
             <div class="grid grid-cols-2 gap-3">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Font Size (<span id="wm-size-val">48</span>px)</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1"><span data-i18n="wm_size_label">Font Size</span> (<span id="wm-size-val">48</span>px)</label>
                 <input type="range" id="wm-size" min="16" max="100" value="48" oninput="updateWatermarkPreview()" class="w-full accent-amber-600">
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-700 mb-1">Opacity (<span id="wm-opacity-val">30</span>%)</label>
+                <label class="block text-xs font-semibold text-slate-700 mb-1"><span data-i18n="wm_opacity_label">Opacity</span> (<span id="wm-opacity-val">30</span>%)</label>
                 <input type="range" id="wm-opacity" min="5" max="90" value="30" oninput="updateWatermarkPreview()" class="w-full accent-amber-600">
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Rotation Angle</label>
+              <label class="block text-xs font-semibold text-slate-700 mb-1" data-i18n="wm_rotation_label">Rotation Angle</label>
               <div class="grid grid-cols-3 gap-2 text-xs">
-                <button type="button" onclick="setWatermarkAngle(-45)" class="wm-angle-btn bg-amber-50 text-amber-800 border border-amber-300 py-1.5 rounded-lg font-medium">Diagonal (-45°)</button>
-                <button type="button" onclick="setWatermarkAngle(0)" class="wm-angle-btn bg-slate-100 text-slate-700 py-1.5 rounded-lg font-medium">Horizontal (0°)</button>
-                <button type="button" onclick="setWatermarkAngle(45)" class="wm-angle-btn bg-slate-100 text-slate-700 py-1.5 rounded-lg font-medium">Diagonal (45°)</button>
+                <button type="button" onclick="setWatermarkAngle(-45)" class="wm-angle-btn bg-amber-50 text-amber-800 border border-amber-300 py-1.5 rounded-lg font-medium" data-i18n="wm_angle_diag_neg">Diagonal (-45°)</button>
+                <button type="button" onclick="setWatermarkAngle(0)" class="wm-angle-btn bg-slate-100 text-slate-700 py-1.5 rounded-lg font-medium" data-i18n="wm_angle_horiz">Horizontal (0°)</button>
+                <button type="button" onclick="setWatermarkAngle(45)" class="wm-angle-btn bg-slate-100 text-slate-700 py-1.5 rounded-lg font-medium" data-i18n="wm_angle_diag_pos">Diagonal (45°)</button>
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-700 mb-1">Color Preset</label>
+              <label class="block text-xs font-semibold text-slate-700 mb-1" data-i18n="wm_color_preset">Color Preset</label>
               <div class="flex items-center space-x-3">
                 <button type="button" onclick="setWatermarkColor('#dc2626')" class="w-7 h-7 rounded-full bg-red-600 ring-2 ring-offset-2 ring-transparent focus:ring-red-600"></button>
                 <button type="button" onclick="setWatermarkColor('#475569')" class="w-7 h-7 rounded-full bg-slate-600 ring-2 ring-offset-2 ring-transparent focus:ring-slate-600"></button>
@@ -368,7 +383,7 @@
 
             <div class="pt-4 border-t border-slate-100">
               <button onclick="executeWatermarkDownload()" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center space-x-2 shadow-md">
-                <span>🦭 Stamp & Download PDF</span>
+                <span data-i18n="stamp_and_download">🦭 Stamp & Download PDF</span>
                 <i data-lucide="download" class="w-4 h-4"></i>
               </button>
             </div>
@@ -376,7 +391,7 @@
 
           <!-- Live Preview Canvas -->
           <div class="md:col-span-2 bg-slate-200/80 rounded-3xl p-6 border border-slate-300 flex flex-col items-center justify-center min-h-[400px]">
-            <span class="text-xs font-semibold text-slate-500 mb-3">Live Page 1 Preview</span>
+            <span class="text-xs font-semibold text-slate-500 mb-3" data-i18n="live_preview">Live Page 1 Preview</span>
             <div class="relative bg-white shadow-xl rounded-lg overflow-hidden border border-slate-300">
               <canvas id="watermark-canvas" class="max-w-full max-h-[500px] block"></canvas>
             </div>
@@ -391,8 +406,8 @@
     <!-- ============================================================= -->
     <section id="panel-sanitize" class="tool-panel hidden">
       <div class="mb-6 text-center max-w-xl mx-auto">
-        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">Sanitize PDF Metadata</h2>
-        <p class="text-sm text-slate-600 mt-1">Deep privacy scrubber. Remove author names, software footprints, and creation timestamps.</p>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight" data-i18n="sanitize_title">Sanitize PDF Metadata</h2>
+        <p class="text-sm text-slate-600 mt-1" data-i18n="sanitize_desc">Deep privacy scrubber. Remove author names, software footprints, and creation timestamps.</p>
       </div>
 
       <!-- Dropzone -->
@@ -401,11 +416,11 @@
         <div class="w-16 h-16 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
           <i data-lucide="shield-check" class="w-8 h-8"></i>
         </div>
-        <h3 class="text-base font-bold text-slate-800">Select PDF to Inspect & Sanitize</h3>
-        <p class="text-xs text-slate-500 mt-1">Discover what hidden metadata is leaking inside your document</p>
+        <h3 class="text-base font-bold text-slate-800" data-i18n="sanitize_drop_title">Select PDF to Inspect & Sanitize</h3>
+        <p class="text-xs text-slate-500 mt-1" data-i18n="sanitize_drop_subtitle">Discover what hidden metadata is leaking inside your document</p>
         <button type="button" onclick="document.getElementById('sanitize-input').click()" class="mt-4 inline-flex items-center space-x-2 bg-teal-600 hover:bg-teal-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm">
           <i data-lucide="file-up" class="w-4 h-4"></i>
-          <span>Choose PDF</span>
+          <span data-i18n="btn_choose_pdf">Choose PDF</span>
         </button>
       </div>
 
@@ -413,10 +428,10 @@
       <div id="sanitize-workspace" class="hidden max-w-2xl mx-auto bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
         <div class="flex items-center justify-between pb-4 border-b border-slate-100">
           <div>
-            <h4 class="font-bold text-slate-900 text-sm">Detected Metadata Attributes</h4>
-            <p class="text-xs text-slate-500">The following information was found embedded in your file</p>
+            <h4 class="font-bold text-slate-900 text-sm" data-i18n="detected_metadata">Detected Metadata Attributes</h4>
+            <p class="text-xs text-slate-500" data-i18n="detected_subtitle">The following information was found embedded in your file</p>
           </div>
-          <span class="text-xs bg-rose-100 text-rose-700 font-semibold px-2.5 py-1 rounded-full">Contains Metadata</span>
+          <span class="text-xs bg-rose-100 text-rose-700 font-semibold px-2.5 py-1 rounded-full" data-i18n="has_metadata_badge">Contains Metadata</span>
         </div>
 
         <div id="metadata-list" class="my-6 space-y-3 font-mono text-xs">
@@ -424,16 +439,16 @@
         </div>
 
         <div class="bg-slate-50 rounded-2xl p-4 border border-slate-200 text-xs text-slate-600 mb-6 space-y-1">
-          <p class="font-semibold text-slate-800">🛡️ What will be stripped:</p>
-          <p>• Title, Subject, Author & Keywords</p>
-          <p>• Creator application & PDF Producer toolkit (e.g. Adobe, Word, Mac OS Preview)</p>
-          <p>• Creation Date and Last Modified Date timestamps</p>
+          <p class="font-semibold text-slate-800" data-i18n="what_will_be_stripped">🛡️ What will be stripped:</p>
+          <p data-i18n="strip_item_1">• Title, Subject, Author & Keywords</p>
+          <p data-i18n="strip_item_2">• Creator application & PDF Producer toolkit</p>
+          <p data-i18n="strip_item_3">• Creation Date and Last Modified Date timestamps</p>
         </div>
 
         <div class="flex items-center justify-between pt-4 border-t border-slate-100">
-          <button onclick="resetSanitizeWorkspace()" class="text-xs text-slate-500 hover:text-slate-800 font-medium">Choose Another File</button>
+          <button onclick="resetSanitizeWorkspace()" class="text-xs text-slate-500 hover:text-slate-800 font-medium" data-i18n="btn_choose_another">Choose Another File</button>
           <button onclick="executeSanitizeDownload()" class="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-6 py-2.5 rounded-xl transition flex items-center space-x-2 shadow-md">
-            <span>🦭 Sanitize & Download Clean PDF</span>
+            <span data-i18n="sanitize_and_download">🦭 Sanitize & Download Clean PDF</span>
             <i data-lucide="download" class="w-4 h-4"></i>
           </button>
         </div>
@@ -452,23 +467,23 @@
       <div class="flex items-center space-x-3 mb-4">
         <span class="text-3xl">🦭</span>
         <div>
-          <h3 class="font-bold text-slate-900 text-base">Feedback & Suggestions</h3>
-          <p class="text-xs text-slate-500">Help Sammy make PDFSeal even better!</p>
+          <h3 class="font-bold text-slate-900 text-base" data-i18n="feedback_title">Feedback & Suggestions</h3>
+          <p class="text-xs text-slate-500" data-i18n="feedback_subtitle">Help Sammy make PDFSeal even better!</p>
         </div>
       </div>
 
       <div class="space-y-4 text-xs">
-        <p class="text-slate-600 leading-relaxed">
+        <p class="text-slate-600 leading-relaxed" data-i18n="feedback_body">
           Encountered a bug or have a feature request? Let us know! Since PDFSeal is an open-source, community-supported tool, every bit of feedback helps.
         </p>
 
         <div class="p-4 bg-blue-50 rounded-2xl border border-blue-200 space-y-2">
-          <p class="font-semibold text-blue-900">💬 Submit on Tally or GitHub:</p>
+          <p class="font-semibold text-blue-900">💬 Submit on GitHub or Ko-fi:</p>
           <div class="flex flex-col sm:flex-row gap-2">
-            <a href="https://github.com/gzz727007/pdfseal/issues/new" target="_blank" class="flex-1 text-center bg-slate-900 text-white py-2 rounded-xl font-medium hover:bg-slate-800 transition">
+            <a href="https://github.com/gzz727007/pdfseal/issues/new" target="_blank" class="flex-1 text-center bg-slate-900 text-white py-2 rounded-xl font-medium hover:bg-slate-800 transition" data-i18n="btn_github_issue">
               Open a GitHub Issue
             </a>
-            <a href="https://ko-fi.com/muffin27" target="_blank" class="flex-1 text-center bg-amber-500 text-white py-2 rounded-xl font-medium hover:bg-amber-600 transition">
+            <a href="https://ko-fi.com/muffin27" target="_blank" class="flex-1 text-center bg-amber-500 text-white py-2 rounded-xl font-medium hover:bg-amber-600 transition" data-i18n="btn_kofi_message">
               Message on Ko-fi
             </a>
           </div>
@@ -483,25 +498,485 @@
       <div class="flex items-center space-x-2">
         <span class="text-xl">🦭</span>
         <span class="font-bold text-slate-800">PDFSeal</span>
-        <span>— 100% Private, Client-Side PDF Utilities.</span>
+        <span data-i18n="brand_footer_claim">— 100% Private, Client-Side PDF Utilities.</span>
       </div>
 
       <div class="flex items-center space-x-5 font-medium">
         <a href="https://github.com/gzz727007/pdfseal" target="_blank" class="hover:text-slate-900 transition">GitHub</a>
         <a href="https://ko-fi.com/muffin27" target="_blank" class="text-amber-700 hover:text-amber-900 transition flex items-center space-x-1">
-          <span>☕ Feed the Seal</span>
+          <span data-i18n="footer_feed_seal">☕ Feed the Seal</span>
         </a>
-        <button onclick="openFeedbackModal()" class="hover:text-slate-900 transition">Feedback</button>
+        <button onclick="openFeedbackModal()" class="hover:text-slate-900 transition" data-i18n="feedback_btn">Feedback</button>
       </div>
     </div>
   </footer>
 
   <!-- ============================================================= -->
+  <!-- I18N MULTI-LANGUAGE TRANSLATIONS DICTIONARY -->
+  <!-- ============================================================= -->
+  <script>
+    const translations = {
+      en: {
+        page_title: "PDFSeal 🦭 - 100% Private, Fast, In-Browser PDF Toolkit",
+        offline_banner: "🛡️ Offline Mode Active: PDFSeal is processing 100% locally in your browser memory.",
+        local_badge: "100% Local",
+        brand_subtitle: "Sealed locally in your browser memory",
+        support_coffee: "☕ Buy a Coffee",
+        support_fish: "/ 🐟 Fish",
+        feedback_btn: "Feedback",
+        tab_merge: "Merge PDFs",
+        tab_organize: "Organize & Rotate",
+        tab_split: "Split & Extract",
+        tab_watermark: "Watermark & Stamp",
+        tab_sanitize: "Sanitize Metadata",
+        merge_title: "Merge Multiple PDFs",
+        merge_desc: "Combine two or more PDF files into a single unified document. Drag to reorder.",
+        merge_drop_title: "Select PDF files to merge",
+        merge_drop_subtitle: "or drag & drop them directly here",
+        btn_choose_files: "Choose PDF Files",
+        merge_selected_title: "Selected Files",
+        merge_selected_hint: "Drag items to change merge sequence",
+        btn_add_more: "+ Add More",
+        btn_clear_all: "Clear All",
+        processed_locally: "Processed locally in browser",
+        seal_and_merge: "🦭 Seal & Merge PDFs",
+        organize_title: "Organize, Rotate & Delete Pages",
+        organize_desc: "Interactive visual grid. Drag cards to reorder, rotate 90°, or remove pages.",
+        organize_drop_title: "Select a PDF to Organize",
+        organize_drop_subtitle: "Single PDF file with multiple pages",
+        btn_choose_pdf: "Choose PDF",
+        pages_total: "Pages Total",
+        rotate_all_90: "Rotate All 90°",
+        btn_reset_file: "Reset / Change File",
+        ready_to_save: "Ready to save changes",
+        seal_and_download: "🦭 Seal & Download",
+        split_title: "Split & Extract Pages",
+        split_desc: "Select individual pages or enter page ranges to extract into a fresh PDF.",
+        split_drop_title: "Select a PDF to Split",
+        split_drop_subtitle: "Extract specific pages with visual selection",
+        custom_page_range: "Custom Page Range:",
+        btn_select_all: "Select All",
+        btn_deselect_all: "Deselect All",
+        selected_label: "Selected:",
+        pages_label: "pages",
+        extract_selected: "🦭 Extract Selected",
+        watermark_title: "Watermark & Stamp PDF",
+        watermark_desc: "Stamp confidential labels, draft notices, or custom text across all pages.",
+        watermark_drop_title: "Select PDF to Watermark",
+        watermark_drop_subtitle: "Add customized text watermark with live preview",
+        wm_controls: "Watermark Controls",
+        wm_text_label: "Watermark Text",
+        wm_size_label: "Font Size",
+        wm_opacity_label: "Opacity",
+        wm_rotation_label: "Rotation Angle",
+        wm_angle_diag_neg: "Diagonal (-45°)",
+        wm_angle_horiz: "Horizontal (0°)",
+        wm_angle_diag_pos: "Diagonal (45°)",
+        wm_color_preset: "Color Preset",
+        stamp_and_download: "🦭 Stamp & Download PDF",
+        live_preview: "Live Page 1 Preview",
+        sanitize_title: "Sanitize PDF Metadata",
+        sanitize_desc: "Deep privacy scrubber. Remove author names, software footprints, and creation timestamps.",
+        sanitize_drop_title: "Select PDF to Inspect & Sanitize",
+        sanitize_drop_subtitle: "Discover what hidden metadata is leaking inside your document",
+        detected_metadata: "Detected Metadata Attributes",
+        detected_subtitle: "The following information was found embedded in your file",
+        has_metadata_badge: "Contains Metadata",
+        what_will_be_stripped: "🛡️ What will be stripped:",
+        strip_item_1: "• Title, Subject, Author & Keywords",
+        strip_item_2: "• Creator application & PDF Producer toolkit",
+        strip_item_3: "• Creation Date and Last Modified Date timestamps",
+        btn_choose_another: "Choose Another File",
+        sanitize_and_download: "🦭 Sanitize & Download Clean PDF",
+        feedback_title: "Feedback & Suggestions",
+        feedback_subtitle: "Help Sammy make PDFSeal even better!",
+        feedback_body: "Encountered a bug or have a feature request? Let us know! Since PDFSeal is an open-source, community-supported tool, every bit of feedback helps.",
+        btn_github_issue: "Open a GitHub Issue",
+        btn_kofi_message: "Message on Ko-fi",
+        brand_footer_claim: "— 100% Private, Client-Side PDF Utilities.",
+        footer_feed_seal: "☕ Feed the Seal"
+      },
+      zh: {
+        page_title: "PDFSeal 🦭 - 100% 纯本地、无上传的极简隐私 PDF 工具箱",
+        offline_banner: "🛡️ 离线模式已激活：PDFSeal 完全在您的浏览器内存中本地运算，零数据上传。",
+        local_badge: "100% 纯本地",
+        brand_subtitle: "文件安全封存在您的浏览器内存中",
+        support_coffee: "☕ 请喝咖啡",
+        support_fish: "/ 🐟 喂小鱼",
+        feedback_btn: "意见反馈",
+        tab_merge: "PDF 合并",
+        tab_organize: "页面重排与旋转",
+        tab_split: "页面拆分与提取",
+        tab_watermark: "水印与印章",
+        tab_sanitize: "隐私元数据脱敏",
+        merge_title: "合并多个 PDF 文件",
+        merge_desc: "将两个或多个 PDF 快速合并为一个新文件，支持拖拽调整先后顺序。",
+        merge_drop_title: "选择需要合并的 PDF 文件",
+        merge_drop_subtitle: "或直接将多个文件拖拽到此处",
+        btn_choose_files: "选择 PDF 文件",
+        merge_selected_title: "已选文件",
+        merge_selected_hint: "按住并拖拽列表项可调整合并顺序",
+        btn_add_more: "+ 继续添加",
+        btn_clear_all: "清空全部",
+        processed_locally: "纯浏览器本地内存处理",
+        seal_and_merge: "🦭 封印并合并 PDF",
+        organize_title: "页面视觉化重排、旋转与删除",
+        organize_desc: "交互式缩略图网格。自由拖拽页面卡片换位，90° 旋转单页或删除废页。",
+        organize_drop_title: "选择要整理的 PDF 文件",
+        organize_drop_subtitle: "支持包含多个页面的任意 PDF 文档",
+        btn_choose_pdf: "选择 PDF 文件",
+        pages_total: "页总计",
+        rotate_all_90: "全部旋转 90°",
+        btn_reset_file: "重置 / 更换文件",
+        ready_to_save: "已准备好保存更改",
+        seal_and_download: "🦭 封印并下载",
+        split_title: "拆分与按需提取页面",
+        split_desc: "可视化勾选需要提取的单页，或直接输入页码区间导出为独立 PDF。",
+        split_drop_title: "选择要拆分的 PDF 文件",
+        split_drop_subtitle: "支持可视化勾选或页码范围精准提取",
+        custom_page_range: "自定义提取页码范围：",
+        btn_select_all: "全选",
+        btn_deselect_all: "取消全选",
+        selected_label: "已选：",
+        pages_label: "页",
+        extract_selected: "🦭 提取所选页面",
+        watermark_title: "PDF 批量加水印与盖章",
+        watermark_desc: "为所有页面添加机密、草稿或自定义文字水印，支持实时预览。",
+        watermark_drop_title: "选择需要加水印的 PDF 文件",
+        watermark_drop_subtitle: "支持实时画布预览与自定义水印参数",
+        wm_controls: "水印参数控制",
+        wm_text_label: "水印文字",
+        wm_size_label: "字体大小",
+        wm_opacity_label: "透明度",
+        wm_rotation_label: "倾斜旋转角度",
+        wm_angle_diag_neg: "斜角 (-45°)",
+        wm_angle_horiz: "水平 (0°)",
+        wm_angle_diag_pos: "斜角 (45°)",
+        wm_color_preset: "预设颜色",
+        stamp_and_download: "🦭 盖章并下载 PDF",
+        live_preview: "第一页实时效果预览",
+        sanitize_title: "PDF 隐私元数据深度脱敏",
+        sanitize_desc: "一键抹除文档内隐藏的作者电脑名、制作软件指纹、创建时间戳等隐私痕迹。",
+        sanitize_drop_title: "选择要检查并脱敏的 PDF",
+        sanitize_drop_subtitle: "检测您的文档内部正在悄悄泄露哪些元数据",
+        detected_metadata: "检测到的元数据信息",
+        detected_subtitle: "以下信息被嵌入在您的原文件中",
+        has_metadata_badge: "存在隐私元数据",
+        what_will_be_stripped: "🛡️ 将被彻底抹除的项目：",
+        strip_item_1: "• 标题、主题、作者姓名与关键词",
+        strip_item_2: "• 创建应用程序与 PDF 生成工具信息",
+        strip_item_3: "• 创建时间戳与最后修改时间记录",
+        btn_choose_another: "更换其他文件",
+        sanitize_and_download: "🦭 一键脱敏并下载干净文件",
+        feedback_title: "意见反馈与功能建议",
+        feedback_subtitle: "帮助小海豹把 PDFSeal 做得更好！",
+        feedback_body: "遇到 Bug 或有新的功能想法？欢迎随时告诉我们！PDFSeal 是一个开源由社区支持的项目，每一条反馈都极其珍贵。",
+        btn_github_issue: "在 GitHub 提 Issue",
+        btn_kofi_message: "在 Ko-fi 上留言",
+        brand_footer_claim: "— 100% 纯本地、无数据上传的隐私 PDF 工具箱。",
+        footer_feed_seal: "☕ 给小海豹喂鱼"
+      },
+      de: {
+        page_title: "PDFSeal 🦭 - 100% Privater, schneller PDF-Werkzeugkasten im Browser",
+        offline_banner: "🛡️ Offline-Modus aktiv: PDFSeal verarbeitet zu 100% lokal im Browser-Speicher.",
+        local_badge: "100% Lokal",
+        brand_subtitle: "Lokal und sicher im Browserspeicher versiegelt",
+        support_coffee: "☕ Kaffee spendieren",
+        support_fish: "/ 🐟 Fisch",
+        feedback_btn: "Feedback",
+        tab_merge: "PDFs zusammenfügen",
+        tab_organize: "Seiten anordnen & drehen",
+        tab_split: "Seiten teilen & extrahieren",
+        tab_watermark: "Wasserzeichen & Stempel",
+        tab_sanitize: "Metadaten bereinigen",
+        merge_title: "Mehrere PDFs zusammenfügen",
+        merge_desc: "Verbinden Sie zwei oder mehr PDF-Dateien in einem Dokument. Zum Sortieren ziehen.",
+        merge_drop_title: "PDF-Dateien zum Zusammenfügen auswählen",
+        merge_drop_subtitle: "oder direkt hierher ziehen",
+        btn_choose_files: "PDF-Dateien auswählen",
+        merge_selected_title: "Ausgewählte Dateien",
+        merge_selected_hint: "Elemente ziehen, um die Reihenfolge zu ändern",
+        btn_add_more: "+ Weitere hinzufügen",
+        btn_clear_all: "Alle löschen",
+        processed_locally: "Lokal im Browser verarbeitet",
+        seal_and_merge: "🦭 PDFs versiegeln & zusammenfügen",
+        organize_title: "Seiten anordnen, drehen & löschen",
+        organize_desc: "Visuelles Raster. Karten ziehen zum Neuanordnen, 90° drehen oder entfernen.",
+        organize_drop_title: "PDF zum Anordnen auswählen",
+        organize_drop_subtitle: "Einzelne PDF-Datei mit mehreren Seiten",
+        btn_choose_pdf: "PDF auswählen",
+        pages_total: "Seiten insgesamt",
+        rotate_all_90: "Alle 90° drehen",
+        btn_reset_file: "Zurücksetzen / Datei ändern",
+        ready_to_save: "Bereit zum Speichern",
+        seal_and_download: "🦭 Versiegeln & Herunterladen",
+        split_title: "Seiten teilen & extrahieren",
+        split_desc: "Wählen Sie einzelne Seiten oder Bereiche aus, um sie in ein neues PDF zu extrahieren.",
+        split_drop_title: "PDF zum Teilen auswählen",
+        split_drop_subtitle: "Bestimmte Seiten visuell auswählen",
+        custom_page_range: "Benutzerdefinierter Seitenbereich:",
+        btn_select_all: "Alle auswählen",
+        btn_deselect_all: "Auswahl aufheben",
+        selected_label: "Ausgewählt:",
+        pages_label: "Seiten",
+        extract_selected: "🦭 Ausgewählte extrahieren",
+        watermark_title: "Wasserzeichen & Stempel",
+        watermark_desc: "Vertraulichkeits-Hinweise oder individuellen Text auf allen Seiten anbringen.",
+        watermark_drop_title: "PDF für Wasserzeichen auswählen",
+        watermark_drop_subtitle: "Textwasserzeichen mit Live-Vorschau hinzufügen",
+        wm_controls: "Wasserzeichen-Einstellungen",
+        wm_text_label: "Wasserzeichen-Text",
+        wm_size_label: "Schriftgröße",
+        wm_opacity_label: "Deckkraft",
+        wm_rotation_label: "Drehwinkel",
+        wm_angle_diag_neg: "Diagonal (-45°)",
+        wm_angle_horiz: "Horizontal (0°)",
+        wm_angle_diag_pos: "Diagonal (45°)",
+        wm_color_preset: "Farbpalette",
+        stamp_and_download: "🦭 Stempeln & Herunterladen",
+        live_preview: "Live-Vorschau Seite 1",
+        sanitize_title: "PDF-Metadaten bereinigen",
+        sanitize_desc: "Datenschutz-Bereinigung. Entfernen Sie Autorennamen und Erstellungszeitpunkte.",
+        sanitize_drop_title: "PDF zum Untersuchen & Bereinigen auswählen",
+        sanitize_drop_subtitle: "Entdecken Sie versteckte Metadaten in Ihrem Dokument",
+        detected_metadata: "Erkannte Metadaten",
+        detected_subtitle: "Folgende Informationen wurden in Ihrer Datei gefunden",
+        has_metadata_badge: "Enthält Metadaten",
+        what_will_be_stripped: "🛡️ Was entfernt wird:",
+        strip_item_1: "• Titel, Thema, Autor & Schlüsselwörter",
+        strip_item_2: "• Ersteller-Software & PDF-Erstellungswerkzeuge",
+        strip_item_3: "• Erstellungs- und Änderungszeitstempel",
+        btn_choose_another: "Andere Datei wählen",
+        sanitize_and_download: "🦭 Bereinigen & Herunterladen",
+        feedback_title: "Feedback & Vorschläge",
+        feedback_subtitle: "Helfen Sie mit, PDFSeal noch besser zu machen!",
+        feedback_body: "Einen Fehler gefunden oder eine Idee? Da PDFSeal Open-Source ist, hilft jedes Feedback.",
+        btn_github_issue: "GitHub Issue eröffnen",
+        btn_kofi_message: "Nachricht auf Ko-fi",
+        brand_footer_claim: "— 100% private, lokale PDF-Werkzeuge.",
+        footer_feed_seal: "☕ Die Robbe füttern"
+      },
+      es: {
+        page_title: "PDFSeal 🦭 - Herramientas PDF 100% privadas y rápidas en el navegador",
+        offline_banner: "🛡️ Modo sin conexión activo: PDFSeal procesa 100% localmente en la memoria del navegador.",
+        local_badge: "100% Local",
+        brand_subtitle: "Sellado localmente en la memoria de su navegador",
+        support_coffee: "☕ Invitar un café",
+        support_fish: "/ 🐟 Pescado",
+        feedback_btn: "Comentarios",
+        tab_merge: "Unir PDFs",
+        tab_organize: "Organizar y rotar",
+        tab_split: "Dividir y extraer",
+        tab_watermark: "Marca de agua y sello",
+        tab_sanitize: "Limpiar metadatos",
+        merge_title: "Unir múltiples archivos PDF",
+        merge_desc: "Combine dos o más archivos PDF en un solo documento. Arrastre para reordenar.",
+        merge_drop_title: "Seleccione archivos PDF para unir",
+        merge_drop_subtitle: "o arrástrelos directamente aquí",
+        btn_choose_files: "Elegir archivos PDF",
+        merge_selected_title: "Archivos seleccionados",
+        merge_selected_hint: "Arrastre elementos para cambiar el orden",
+        btn_add_more: "+ Añadir más",
+        btn_clear_all: "Borrar todo",
+        processed_locally: "Procesado localmente en el navegador",
+        seal_and_merge: "🦭 Sellar y unir PDFs",
+        organize_title: "Organizar, rotar y eliminar páginas",
+        organize_desc: "Cuadrícula visual. Arrastre tarjetas para reordenar, rote 90° o elimine páginas.",
+        organize_drop_title: "Seleccione un PDF para organizar",
+        organize_drop_subtitle: "Archivo PDF único con múltiples páginas",
+        btn_choose_pdf: "Elegir PDF",
+        pages_total: "Páginas en total",
+        rotate_all_90: "Rotar todo 90°",
+        btn_reset_file: "Restablecer / Cambiar archivo",
+        ready_to_save: "Listo para guardar cambios",
+        seal_and_download: "🦭 Sellar y descargar",
+        split_title: "Dividir y extraer páginas",
+        split_desc: "Seleccione páginas individuales o ingrese rangos para extraer en un nuevo PDF.",
+        split_drop_title: "Seleccione un PDF para dividir",
+        split_drop_subtitle: "Extraiga páginas específicas con selección visual",
+        custom_page_range: "Rango de páginas personalizado:",
+        btn_select_all: "Seleccionar todo",
+        btn_deselect_all: "Deseleccionar todo",
+        selected_label: "Seleccionadas:",
+        pages_label: "páginas",
+        extract_selected: "🦭 Extraer seleccionadas",
+        watermark_title: "Marca de agua y sello en PDF",
+        watermark_desc: "Agregue etiquetas confidenciales o texto personalizado en todas las páginas.",
+        watermark_drop_title: "Seleccione PDF para marca de agua",
+        watermark_drop_subtitle: "Añada texto con vista previa en tiempo real",
+        wm_controls: "Controles de marca de agua",
+        wm_text_label: "Texto de la marca de agua",
+        wm_size_label: "Tamaño de fuente",
+        wm_opacity_label: "Opacidad",
+        wm_rotation_label: "Ángulo de rotación",
+        wm_angle_diag_neg: "Diagonal (-45°)",
+        wm_angle_horiz: "Horizontal (0°)",
+        wm_angle_diag_pos: "Diagonal (45°)",
+        wm_color_preset: "Color preestablecido",
+        stamp_and_download: "🦭 Sellar y descargar PDF",
+        live_preview: "Vista previa en vivo pág. 1",
+        sanitize_title: "Limpiar metadatos de PDF",
+        sanitize_desc: "Limpieza profunda de privacidad. Elimine nombres de autor y marcas de tiempo.",
+        sanitize_drop_title: "Seleccione PDF para inspeccionar y limpiar",
+        sanitize_drop_subtitle: "Descubra qué metadatos ocultos tiene su documento",
+        detected_metadata: "Metadatos detectados",
+        detected_subtitle: "Se encontró la siguiente información en su archivo",
+        has_metadata_badge: "Contiene metadatos",
+        what_will_be_stripped: "🛡️ Qué se eliminará:",
+        strip_item_1: "• Título, Asunto, Autor y Palabras clave",
+        strip_item_2: "• Aplicación de creación y herramientas PDF",
+        strip_item_3: "• Marcas de fecha de creación y modificación",
+        btn_choose_another: "Elegir otro archivo",
+        sanitize_and_download: "🦭 Limpiar y descargar PDF limpio",
+        feedback_title: "Comentarios y sugerencias",
+        feedback_subtitle: "¡Ayude a Sammy a mejorar PDFSeal!",
+        feedback_body: "¿Encontró un error o tiene una sugerencia? Al ser código abierto, cada comentario ayuda.",
+        btn_github_issue: "Abrir un Issue en GitHub",
+        btn_kofi_message: "Mensaje en Ko-fi",
+        brand_footer_claim: "— Herramientas PDF 100% privadas y locales.",
+        footer_feed_seal: "☕ Alimentar a la foca"
+      },
+      fr: {
+        page_title: "PDFSeal 🦭 - Boîte à outils PDF 100% privée et rapide dans le navigateur",
+        offline_banner: "🛡️ Mode hors ligne actif : PDFSeal traite 100% localement dans la mémoire du navigateur.",
+        local_badge: "100% Local",
+        brand_subtitle: "Scellé localement dans la mémoire de votre navigateur",
+        support_coffee: "☕ Offrir un café",
+        support_fish: "/ 🐟 Poisson",
+        feedback_btn: "Commentaires",
+        tab_merge: "Fusionner des PDF",
+        tab_organize: "Organiser & faire pivoter",
+        tab_split: "Diviser & extraire",
+        tab_watermark: "Filigrane & tampon",
+        tab_sanitize: "Nettoyer les métadonnées",
+        merge_title: "Fusionner plusieurs fichiers PDF",
+        merge_desc: "Combinez deux ou plusieurs fichiers PDF en un seul document. Glissez pour réorganiser.",
+        merge_drop_title: "Sélectionnez les fichiers PDF à fusionner",
+        merge_drop_subtitle: "ou glissez-déposez les fichiers directement ici",
+        btn_choose_files: "Choisir des fichiers PDF",
+        merge_selected_title: "Fichiers sélectionnés",
+        merge_selected_hint: "Glissez les éléments pour changer l'ordre",
+        btn_add_more: "+ Ajouter d'autres",
+        btn_clear_all: "Tout effacer",
+        processed_locally: "Traité localement dans le navigateur",
+        seal_and_merge: "🦭 Sceller & fusionner les PDF",
+        organize_title: "Organiser, pivoter & supprimer des pages",
+        organize_desc: "Grille visuelle. Glissez les cartes pour réorganiser, pivotez à 90° ou supprimez.",
+        organize_drop_title: "Sélectionnez un PDF à organiser",
+        organize_drop_subtitle: "Fichier PDF unique avec plusieurs pages",
+        btn_choose_pdf: "Choisir un PDF",
+        pages_total: "Pages au total",
+        rotate_all_90: "Tout pivoter de 90°",
+        btn_reset_file: "Réinitialiser / Changer de fichier",
+        ready_to_save: "Prêt à enregistrer les modifications",
+        seal_and_download: "🦭 Sceller & Télécharger",
+        split_title: "Diviser & extraire des pages",
+        split_desc: "Sélectionnez des pages ou entrez des plages pour les extraire dans un nouveau PDF.",
+        split_drop_title: "Sélectionnez un PDF à diviser",
+        split_drop_subtitle: "Extrayez des pages spécifiques avec sélection visuelle",
+        custom_page_range: "Plage de pages personnalisée :",
+        btn_select_all: "Tout sélectionner",
+        btn_deselect_all: "Tout désélectionner",
+        selected_label: "Sélectionné(es) :",
+        pages_label: "pages",
+        extract_selected: "🦭 Extraire la sélection",
+        watermark_title: "Filigrane & tampon PDF",
+        watermark_desc: "Apposez des étiquettes confidentielles ou du texte sur toutes les pages.",
+        watermark_drop_title: "Sélectionnez le PDF à filigraner",
+        watermark_drop_subtitle: "Ajoutez un filigrane texte avec aperçu en direct",
+        wm_controls: "Contrôles du filigrane",
+        wm_text_label: "Texte du filigrane",
+        wm_size_label: "Taille de police",
+        wm_opacity_label: "Opacité",
+        wm_rotation_label: "Angle de rotation",
+        wm_angle_diag_neg: "Diagonal (-45°)",
+        wm_angle_horiz: "Horizontal (0°)",
+        wm_angle_diag_pos: "Diagonal (45°)",
+        wm_color_preset: "Palette de couleurs",
+        stamp_and_download: "🦭 Tamponner & Télécharger",
+        live_preview: "Aperçu en direct page 1",
+        sanitize_title: "Nettoyer les métadonnées PDF",
+        sanitize_desc: "Nettoyage approfondi. Supprimez les noms d'auteur et les horodatages de création.",
+        sanitize_drop_title: "Sélectionnez un PDF à inspecter & nettoyer",
+        sanitize_drop_subtitle: "Découvrez les métadonnées cachées dans votre document",
+        detected_metadata: "Métadonnées détectées",
+        detected_subtitle: "Les informations suivantes ont été trouvées dans votre fichier",
+        has_metadata_badge: "Contient des métadonnées",
+        what_will_be_stripped: "🛡️ Ce qui sera supprimé :",
+        strip_item_1: "• Titre, Sujet, Auteur & Mots-clés",
+        strip_item_2: "• Application créatrice & outils de production PDF",
+        strip_item_3: "• Horodatages de création et de modification",
+        btn_choose_another: "Choisir un autre fichier",
+        sanitize_and_download: "🦭 Nettoyer & Télécharger le PDF propre",
+        feedback_title: "Commentaires & suggestions",
+        feedback_subtitle: "Aidez Sammy à rendre PDFSeal encore meilleur !",
+        feedback_body: "Un bug ou une idée ? PDFSeal étant open-source, chaque retour d'expérience compte.",
+        btn_github_issue: "Ouvrir un ticket GitHub",
+        btn_kofi_message: "Message sur Ko-fi",
+        brand_footer_claim: "— Outils PDF 100% privés et locaux.",
+        footer_feed_seal: "☕ Nourrir le phoque"
+      }
+    };
+
+    let currentLang = 'en';
+
+    function initLanguage() {
+      // 1. Check local storage
+      const savedLang = localStorage.getItem('pdfseal_lang');
+      if (savedLang && translations[savedLang]) {
+        currentLang = savedLang;
+      } else {
+        // 2. Detect browser language
+        const navLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+        if (navLang.startsWith('zh')) currentLang = 'zh';
+        else if (navLang.startsWith('de')) currentLang = 'de';
+        else if (navLang.startsWith('es')) currentLang = 'es';
+        else if (navLang.startsWith('fr')) currentLang = 'fr';
+        else currentLang = 'en';
+      }
+
+      document.getElementById('lang-select').value = currentLang;
+      applyLanguage(currentLang);
+    }
+
+    function changeLanguage(lang) {
+      if (!translations[lang]) return;
+      currentLang = lang;
+      localStorage.setItem('pdfseal_lang', lang);
+      applyLanguage(lang);
+    }
+
+    function applyLanguage(lang) {
+      const dict = translations[lang] || translations.en;
+
+      // Update document title
+      if (dict.page_title) document.title = dict.page_title;
+
+      // Update all elements with data-i18n
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (dict[key]) {
+          el.innerText = dict[key];
+        }
+      });
+
+      // Update placeholder if any
+      const rangeInput = document.getElementById('split-range-input');
+      if (rangeInput) {
+        rangeInput.placeholder = lang === 'zh' ? '例如 1-3, 5, 8' : 'e.g. 1-3, 5, 8';
+      }
+
+      lucide.createIcons();
+    }
+  </script>
+
+  <!-- ============================================================= -->
   <!-- JAVASCRIPT CORE LOGIC -->
   <!-- ============================================================= -->
   <script>
-    // Initialize Lucide Icons
+    // Initialize Lucide Icons & i18n
     lucide.createIcons();
+    initLanguage();
 
     // Configure PDF.js Worker
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -638,7 +1113,8 @@
 
     async function executeMerge() {
       if (mergeFiles.length < 2) {
-        alert('Please select at least 2 PDF files to merge.');
+        const msg = currentLang === 'zh' ? '请至少选择 2 个 PDF 文件进行合并。' : 'Please select at least 2 PDF files to merge.';
+        alert(msg);
         return;
       }
 
@@ -664,8 +1140,7 @@
         alert('Failed to merge PDFs: ' + err.message);
       } finally {
         btn.disabled = false;
-        btn.innerHTML = `<span>🦭 Seal & Merge PDFs</span><i data-lucide="download" class="w-4 h-4"></i>`;
-        lucide.createIcons();
+        applyLanguage(currentLang);
       }
     }
 
@@ -673,7 +1148,7 @@
     // 2. ORGANIZE & ROTATE LOGIC
     // =============================================================
     let organizeDocBytes = null;
-    let organizePages = []; // [{ originalIndex, rotation, canvasDataUrl }]
+    let organizePages = [];
 
     async function handleOrganizeFile(file) {
       if (!file) return;
@@ -690,7 +1165,8 @@
 
       organizePages = [];
       const grid = document.getElementById('organize-grid');
-      grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-500 font-medium"><i data-lucide="loader" class="w-6 h-6 animate-spin mx-auto mb-2 text-indigo-600"></i>Rendering page thumbnails...</div>`;
+      const loadMsg = currentLang === 'zh' ? '正在生成页面缩略图...' : 'Rendering page thumbnails...';
+      grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-500 font-medium"><i data-lucide="loader" class="w-6 h-6 animate-spin mx-auto mb-2 text-indigo-600"></i>${loadMsg}</div>`;
       lucide.createIcons();
 
       for (let i = 1; i <= numPages; i++) {
@@ -716,13 +1192,16 @@
       const grid = document.getElementById('organize-grid');
       grid.innerHTML = '';
 
+      const pageLabel = currentLang === 'zh' ? '第' : 'Page';
+      const pageSuffix = currentLang === 'zh' ? '页' : '';
+
       organizePages.forEach((p, idx) => {
         const card = document.createElement('div');
         card.className = 'bg-white rounded-2xl border border-slate-200 p-3 shadow-xs flex flex-col items-center relative group hover:shadow-md transition cursor-grab active:cursor-grabbing';
         card.dataset.index = idx;
         card.innerHTML = `
           <div class="w-full flex items-center justify-between mb-2">
-            <span class="text-[11px] font-extrabold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">Page ${idx + 1}</span>
+            <span class="text-[11px] font-extrabold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">${pageLabel} ${idx + 1} ${pageSuffix}</span>
             <div class="flex items-center space-x-1">
               <button onclick="rotatePage(${idx}, 90)" title="Rotate 90° Clockwise" class="p-1 hover:bg-slate-100 rounded-md text-slate-600">
                 <i data-lucide="rotate-cw" class="w-3.5 h-3.5"></i>
@@ -765,7 +1244,8 @@
 
     function deletePage(index) {
       if (organizePages.length <= 1) {
-        alert('Cannot delete the only remaining page.');
+        const msg = currentLang === 'zh' ? '不能删除仅剩的一页。' : 'Cannot delete the only remaining page.';
+        alert(msg);
         return;
       }
       organizePages.splice(index, 1);
@@ -820,10 +1300,14 @@
       splitSelectedIndices.clear();
 
       const grid = document.getElementById('split-grid');
-      grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-500"><i data-lucide="loader" class="w-6 h-6 animate-spin mx-auto mb-2 text-emerald-600"></i>Generating previews...</div>`;
+      const loadMsg = currentLang === 'zh' ? '正在生成缩略图...' : 'Generating previews...';
+      grid.innerHTML = `<div class="col-span-full py-12 text-center text-xs text-slate-500"><i data-lucide="loader" class="w-6 h-6 animate-spin mx-auto mb-2 text-emerald-600"></i>${loadMsg}</div>`;
       lucide.createIcons();
 
       grid.innerHTML = '';
+      const pageLabel = currentLang === 'zh' ? '第' : 'Page';
+      const pageSuffix = currentLang === 'zh' ? '页' : '';
+
       for (let i = 1; i <= splitTotalPages; i++) {
         const page = await pdf.getPage(i);
         const viewport = page.getViewport({ scale: 0.4 });
@@ -839,7 +1323,7 @@
         card.className = 'split-page-card bg-white rounded-2xl border-2 border-slate-200 p-3 shadow-xs flex flex-col items-center relative cursor-pointer hover:border-emerald-400 transition select-none';
         card.innerHTML = `
           <div class="w-full flex items-center justify-between mb-2">
-            <span class="text-[11px] font-bold text-slate-700">Page ${i}</span>
+            <span class="text-[11px] font-bold text-slate-700">${pageLabel} ${i} ${pageSuffix}</span>
             <div class="checkbox-indicator w-4 h-4 rounded-md border border-slate-300 flex items-center justify-center text-white bg-white transition"></div>
           </div>
           <div class="overflow-hidden rounded-lg border border-slate-100 flex items-center justify-center bg-slate-50 w-full h-36 pointer-events-none">
@@ -912,12 +1396,15 @@
           indicator.innerHTML = '';
         }
       }
-      document.getElementById('split-ready-text').innerText = `${splitSelectedIndices.size} pages selected for export`;
+      const count = splitSelectedIndices.size;
+      const readyMsg = currentLang === 'zh' ? `已选择 ${count} 页准备导出` : `${count} pages selected for export`;
+      document.getElementById('split-ready-text').innerText = readyMsg;
     }
 
     async function executeSplitExport() {
       if (splitSelectedIndices.size === 0) {
-        alert('Please select at least 1 page to extract.');
+        const msg = currentLang === 'zh' ? '请至少选择 1 页进行提取。' : 'Please select at least 1 page to extract.';
+        alert(msg);
         return;
       }
       try {
@@ -1018,7 +1505,6 @@
         const size = parseInt(document.getElementById('wm-size').value) || 48;
         const opacity = (parseInt(document.getElementById('wm-opacity').value) || 30) / 100;
 
-        // Parse RGB from hex
         const r = parseInt(watermarkColorHex.slice(1, 3), 16) / 255;
         const g = parseInt(watermarkColorHex.slice(3, 5), 16) / 255;
         const b = parseInt(watermarkColorHex.slice(5, 7), 16) / 255;
@@ -1061,21 +1547,22 @@
       const list = document.getElementById('metadata-list');
       list.innerHTML = '';
 
+      const noneText = currentLang === 'zh' ? '无' : 'None';
       const meta = {
-        'Title': pdfDoc.getTitle() || 'None',
-        'Author': pdfDoc.getAuthor() || 'None',
-        'Subject': pdfDoc.getSubject() || 'None',
-        'Keywords': pdfDoc.getKeywords() || 'None',
-        'Producer': pdfDoc.getProducer() || 'None',
-        'Creator': pdfDoc.getCreator() || 'None',
-        'Creation Date': pdfDoc.getCreationDate() ? pdfDoc.getCreationDate().toISOString() : 'None',
-        'Modification Date': pdfDoc.getModificationDate() ? pdfDoc.getModificationDate().toISOString() : 'None'
+        'Title': pdfDoc.getTitle() || noneText,
+        'Author': pdfDoc.getAuthor() || noneText,
+        'Subject': pdfDoc.getSubject() || noneText,
+        'Keywords': pdfDoc.getKeywords() || noneText,
+        'Producer': pdfDoc.getProducer() || noneText,
+        'Creator': pdfDoc.getCreator() || noneText,
+        'Creation Date': pdfDoc.getCreationDate() ? pdfDoc.getCreationDate().toISOString() : noneText,
+        'Modification Date': pdfDoc.getModificationDate() ? pdfDoc.getModificationDate().toISOString() : noneText
       };
 
       for (const [key, val] of Object.entries(meta)) {
         const item = document.createElement('div');
         item.className = 'flex justify-between py-1.5 px-3 bg-slate-50 rounded-lg border border-slate-100';
-        item.innerHTML = `<span class="text-slate-500 font-medium">${key}:</span><span class="${val !== 'None' ? 'text-rose-600 font-bold' : 'text-slate-400'} truncate max-w-xs">${val}</span>`;
+        item.innerHTML = `<span class="text-slate-500 font-medium">${key}:</span><span class="${val !== noneText ? 'text-rose-600 font-bold' : 'text-slate-400'} truncate max-w-xs">${val}</span>`;
         list.appendChild(item);
       }
     }
