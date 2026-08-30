@@ -1,0 +1,252 @@
+<template>
+  <section class="tool-panel">
+    <div class="mb-6 text-center max-w-xl mx-auto">
+      <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{{ t('organize_title') }}</h2>
+      <p class="text-sm text-slate-600 mt-1">{{ t('organize_desc') }}</p>
+    </div>
+
+    <!-- Dropzone -->
+    <div 
+      v-if="!docBytes"
+      @dragover.prevent="isDragOver = true"
+      @dragleave.prevent="isDragOver = false"
+      @drop.prevent="onDrop"
+      :class="[
+        'border-2 border-dashed rounded-3xl p-10 text-center transition cursor-pointer shadow-xs max-w-2xl mx-auto bg-white',
+        isDragOver ? 'border-indigo-500 bg-indigo-50/50' : 'border-slate-300 hover:border-indigo-500'
+      ]"
+      @click="fileInputRef.click()"
+    >
+      <input 
+        ref="fileInputRef" 
+        type="file" 
+        accept="application/pdf" 
+        class="hidden" 
+        @change="onFileSelected"
+      >
+      <div class="w-16 h-16 bg-indigo-50 text-indigo-600 rounded-2xl flex items-center justify-center mx-auto mb-3 shadow-inner">
+        <LayoutGrid class="w-8 h-8" />
+      </div>
+      <h3 class="text-base font-bold text-slate-800">{{ t('organize_drop_title') }}</h3>
+      <p class="text-xs text-slate-500 mt-1">{{ t('organize_drop_subtitle') }}</p>
+      <button 
+        type="button" 
+        class="mt-4 inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm"
+      >
+        <FileUp class="w-4 h-4" />
+        <span>{{ t('btn_choose_pdf') }}</span>
+      </button>
+    </div>
+
+    <!-- Workspace -->
+    <div v-else>
+      <!-- Control Toolbar -->
+      <div class="bg-white rounded-2xl border border-slate-200 p-4 mb-6 shadow-xs flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center space-x-3">
+          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2.5 py-1 rounded-lg">
+            {{ pages.length }} {{ t('pages_total') }}
+          </span>
+          <span class="text-xs font-medium text-slate-600 truncate max-w-xs">{{ filename }}</span>
+        </div>
+
+        <div class="flex items-center space-x-2">
+          <button 
+            @click="rotateAllPages(90)" 
+            class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-1.5 rounded-lg transition flex items-center space-x-1"
+          >
+            <RotateCw class="w-3.5 h-3.5" />
+            <span>{{ t('rotate_all_90') }}</span>
+          </button>
+          <button 
+            @click="reset" 
+            class="text-xs text-rose-600 hover:bg-rose-50 font-medium px-3 py-1.5 rounded-lg transition"
+          >
+            {{ t('btn_reset_file') }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Loading State -->
+      <div v-if="isLoading" class="py-16 text-center text-xs text-slate-500 font-medium">
+        <Loader2 class="w-6 h-6 animate-spin mx-auto mb-2 text-indigo-600" />
+        <span>Rendering page thumbnails...</span>
+      </div>
+
+      <!-- Thumbnail Grid -->
+      <div v-else ref="gridRef" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 min-h-[200px]">
+        <div 
+          v-for="(p, idx) in pages" 
+          :key="p.pageIndex"
+          class="bg-white rounded-2xl border border-slate-200 p-3 shadow-xs flex flex-col items-center relative group hover:shadow-md transition cursor-grab active:cursor-grabbing"
+        >
+          <div class="w-full flex items-center justify-between mb-2">
+            <span class="text-[11px] font-extrabold bg-slate-100 text-slate-700 px-2 py-0.5 rounded-md">
+              {{ currentLang === 'zh' ? `第 ${idx + 1} 页` : `Page ${idx + 1}` }}
+            </span>
+            <div class="flex items-center space-x-1">
+              <button 
+                @click.stop="rotatePage(idx, 90)" 
+                title="Rotate 90° Clockwise" 
+                class="p-1 hover:bg-slate-100 rounded-md text-slate-600"
+              >
+                <RotateCw class="w-3.5 h-3.5" />
+              </button>
+              <button 
+                @click.stop="deletePage(idx)" 
+                title="Delete Page" 
+                class="p-1 hover:bg-rose-50 text-slate-400 hover:text-rose-600 rounded-md"
+              >
+                <Trash2 class="w-3.5 h-3.5" />
+              </button>
+            </div>
+          </div>
+          <div class="overflow-hidden rounded-lg border border-slate-100 flex items-center justify-center bg-slate-50 w-full h-44">
+            <img 
+              :src="p.dataUrl" 
+              :style="{ transform: `rotate(${p.rotation}deg)` }" 
+              class="max-h-full max-w-full object-contain transition-transform duration-200"
+            >
+          </div>
+        </div>
+      </div>
+
+      <!-- Floating Bottom Export Bar -->
+      <div class="sticky bottom-6 mt-8 max-w-md mx-auto bg-slate-900/95 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl border border-slate-800 flex items-center justify-between z-30">
+        <div class="text-xs text-slate-300">
+          <span>{{ t('ready_to_save') }}</span>
+        </div>
+        <button 
+          :disabled="isProcessing"
+          @click="executeExport" 
+          class="bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs px-5 py-2.5 rounded-xl transition flex items-center space-x-1.5 shadow-md disabled:opacity-50"
+        >
+          <span v-if="!isProcessing">{{ t('seal_and_download') }}</span>
+          <span v-else>Sealing...</span>
+          <Download v-if="!isProcessing" class="w-4 h-4" />
+          <Loader2 v-else class="w-4 h-4 animate-spin" />
+        </button>
+      </div>
+    </div>
+  </section>
+</template>
+
+<script setup>
+import { ref, nextTick } from 'vue';
+import { LayoutGrid, FileUp, RotateCw, Trash2, Download, Loader2 } from 'lucide-vue-next';
+import * as pdfjsLib from 'pdfjs-dist';
+import { PDFDocument, degrees } from 'pdf-lib';
+import Sortable from 'sortablejs';
+import { t, currentLang } from '../i18n';
+import { triggerDownload } from '../utils/download';
+
+const fileInputRef = ref(null);
+const gridRef = ref(null);
+const docBytes = ref(null);
+const filename = ref('');
+const pages = ref([]);
+const isDragOver = ref(false);
+const isLoading = ref(false);
+const isProcessing = ref(false);
+let sortableInstance = null;
+
+function onFileSelected(e) {
+  const file = e.target.files[0];
+  if (file) loadFile(file);
+  e.target.value = '';
+}
+
+function onDrop(e) {
+  isDragOver.value = false;
+  const file = e.dataTransfer.files[0];
+  if (file && file.type === 'application/pdf') loadFile(file);
+}
+
+async function loadFile(file) {
+  filename.value = file.name;
+  isLoading.value = true;
+  docBytes.value = await file.arrayBuffer();
+
+  try {
+    const pdf = await pdfjsLib.getDocument({ data: docBytes.value }).promise;
+    pages.value = [];
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const viewport = page.getViewport({ scale: 0.5 });
+      const canvas = document.createElement('canvas');
+      const ctx = canvas.getContext('2d');
+      canvas.width = viewport.width;
+      canvas.height = viewport.height;
+      await page.render({ canvasContext: ctx, viewport }).promise;
+
+      pages.value.push({
+        pageIndex: i - 1,
+        rotation: 0,
+        dataUrl: canvas.toDataURL()
+      });
+    }
+
+    nextTick(() => {
+      if (gridRef.value) {
+        sortableInstance = new Sortable(gridRef.value, {
+          animation: 150,
+          ghostClass: 'ghost-card',
+          onEnd: (evt) => {
+            const item = pages.value.splice(evt.oldIndex, 1)[0];
+            pages.value.splice(evt.newIndex, 0, item);
+          }
+        });
+      }
+    });
+  } catch (err) {
+    alert('Failed to load PDF: ' + err.message);
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+function rotatePage(idx, deg) {
+  pages.value[idx].rotation = (pages.value[idx].rotation + deg) % 360;
+}
+
+function rotateAllPages(deg) {
+  pages.value.forEach(p => { p.rotation = (p.rotation + deg) % 360; });
+}
+
+function deletePage(idx) {
+  if (pages.value.length <= 1) {
+    alert(currentLang.value === 'zh' ? '不能删除仅剩的一页。' : 'Cannot delete the only remaining page.');
+    return;
+  }
+  pages.value.splice(idx, 1);
+}
+
+function reset() {
+  docBytes.value = null;
+  pages.value = [];
+  if (sortableInstance) sortableInstance.destroy();
+}
+
+async function executeExport() {
+  if (!docBytes.value || pages.value.length === 0) return;
+  isProcessing.value = true;
+  try {
+    const srcPdf = await PDFDocument.load(docBytes.value);
+    const newPdf = await PDFDocument.create();
+
+    for (const item of pages.value) {
+      const [copied] = await newPdf.copyPages(srcPdf, [item.pageIndex]);
+      const currentRot = copied.getRotation().angle;
+      copied.setRotation(degrees(currentRot + item.rotation));
+      newPdf.addPage(copied);
+    }
+
+    const outBytes = await newPdf.save();
+    triggerDownload(new Blob([outBytes], { type: 'application/pdf' }), `PDFSeal_Organized_${Date.now()}.pdf`);
+  } catch (err) {
+    alert('Failed to export organized PDF: ' + err.message);
+  } finally {
+    isProcessing.value = false;
+  }
+}
+</script>
