@@ -1,0 +1,15 @@
+# Logs & Environment
+.env
+.env.local
+*.log
+
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Dependencies & Build artifacts (if any in future)
+node_modules/
+dist/
+build/
