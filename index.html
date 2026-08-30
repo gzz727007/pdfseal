@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDFSeal 🦭 - 100% Private, Fast, In-Browser PDF Toolkit</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦭</text></svg>">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col justify-between">
+  <!-- Navbar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <span class="text-3xl">🦭</span>
+        <div>
+          <span class="font-bold text-xl text-slate-900 tracking-tight">PDFSeal</span>
+          <span class="ml-2 text-xs bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-medium">100% Private</span>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-3">
+        <a href="https://ko-fi.com/muffin27" target="_blank" class="flex items-center space-x-1 text-sm bg-amber-50 text-amber-800 border border-amber-200 px-3 py-1.5 rounded-lg hover:bg-amber-100 transition font-medium">
+          <span>☕ Buy a Coffee / 🐟 Fish</span>
+        </a>
+        <a href="https://github.com/gzz727007/pdfseal" target="_blank" class="p-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 rounded-lg transition">
+          <i data-lucide="github" class="w-5 h-5"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <main class="max-w-4xl mx-auto px-4 py-16 text-center">
+    <div class="inline-flex items-center space-x-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-6">
+      <i data-lucide="shield-check" class="w-4 h-4"></i>
+      <span>Sealed In Your Browser • Zero Cloud Uploads</span>
+    </div>
+    
+    <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight mb-4">
+      Fast, Private PDF Utilities.
+    </h1>
+    <p class="text-lg text-slate-600 max-w-2xl mx-auto mb-10">
+      Merge, reorder, split, and sanitize your PDF documents locally. Your files never leave your device.
+    </p>
+
+    <!-- Placeholder Dropzone -->
+    <div class="border-2 border-dashed border-slate-300 rounded-2xl p-12 bg-white hover:border-blue-500 transition cursor-pointer shadow-sm">
+      <div class="w-16 h-16 bg-blue-50 text-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+        <i data-lucide="file-up" class="w-8 h-8"></i>
+      </div>
+      <h3 class="text-lg font-semibold text-slate-800 mb-1">Drop your PDF files here</h3>
+      <p class="text-sm text-slate-500">or click to browse from your device</p>
+      <div class="mt-4 inline-flex items-center text-xs text-emerald-600 font-medium bg-emerald-50 px-2.5 py-1 rounded-md">
+        <i data-lucide="lock" class="w-3.5 h-3.5 mr-1"></i> Client-Side Processing Only
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between space-y-2 sm:space-y-0">
+      <p>© 2026 PDFSeal. 100% Free & Open Source under MIT License.</p>
+      <div class="flex items-center space-x-4">
+        <a href="https://github.com/gzz727007/pdfseal" class="hover:underline">GitHub</a>
+        <a href="https://ko-fi.com/muffin27" class="hover:underline">Support on Ko-fi</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>
