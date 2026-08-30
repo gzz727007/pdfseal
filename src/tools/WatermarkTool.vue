@@ -1,6 +1,6 @@
 <template>
-  <section class="tool-panel">
-    <div class="mb-6 text-center max-w-xl mx-auto">
+  <section class="tool-panel w-full">
+    <div class="mb-5 text-center max-w-xl mx-auto">
       <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{{ t('watermark_title') }}</h2>
       <p class="text-sm text-slate-600 mt-1">{{ t('watermark_desc') }}</p>
     </div>
@@ -12,7 +12,7 @@
       @dragleave.prevent="isDragOver = false"
       @drop.prevent="onDrop"
       :class="[
-        'border-2 border-dashed rounded-3xl p-10 text-center transition cursor-pointer shadow-xs max-w-2xl mx-auto bg-white',
+        'border-2 border-dashed rounded-3xl p-12 text-center transition cursor-pointer shadow-xs max-w-3xl mx-auto bg-white',
         isDragOver ? 'border-amber-500 bg-amber-50/50' : 'border-slate-300 hover:border-amber-500'
       ]"
       @click="fileInputRef.click()"
@@ -31,23 +31,28 @@
       <p class="text-xs text-slate-500 mt-1">{{ t('watermark_drop_subtitle') }}</p>
       <button 
         type="button" 
-        class="mt-4 inline-flex items-center space-x-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm"
+        class="mt-4 inline-flex items-center space-x-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition shadow-sm"
       >
         <FileUp class="w-4 h-4" />
         <span>{{ t('btn_choose_pdf') }}</span>
       </button>
     </div>
 
-    <!-- Workspace -->
-    <div v-else class="max-w-4xl mx-auto">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Workspace (Expanded Grid) -->
+    <div v-else class="w-full">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
-        <!-- Controls -->
-        <div class="bg-white rounded-3xl border border-slate-200 p-6 shadow-sm space-y-4">
-          <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5 pb-2 border-b border-slate-100">
-            <Sliders class="w-4 h-4 text-amber-600" />
-            <span>{{ t('wm_controls') }}</span>
-          </h4>
+        <!-- Left Controls (4 cols on lg) -->
+        <div class="lg:col-span-4 bg-white rounded-3xl border border-slate-200 p-6 shadow-xs space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+            <h4 class="font-bold text-slate-900 text-sm flex items-center space-x-1.5">
+              <Sliders class="w-4 h-4 text-amber-600" />
+              <span>{{ t('wm_controls') }}</span>
+            </h4>
+            <button @click="reset" class="text-xs text-slate-400 hover:text-rose-600 font-medium">
+              {{ t('btn_reset_file') }}
+            </button>
+          </div>
 
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">{{ t('wm_text_label') }}</label>
@@ -55,7 +60,7 @@
               type="text" 
               v-model="wmText" 
               @input="renderPreview"
-              class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 outline-hidden font-bold"
+              class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl px-3 py-2.5 focus:ring-2 focus:ring-amber-500 outline-hidden font-bold"
             >
           </div>
 
@@ -91,8 +96,8 @@
                 type="button" 
                 @click="setAngle(-45)"
                 :class="[
-                  'py-1.5 rounded-lg font-medium transition',
-                  wmAngle === -45 ? 'bg-amber-50 text-amber-800 border border-amber-300' : 'bg-slate-100 text-slate-700'
+                  'py-2 rounded-lg font-medium transition',
+                  wmAngle === -45 ? 'bg-amber-50 text-amber-800 border border-amber-300 shadow-xs' : 'bg-slate-100 text-slate-700'
                 ]"
               >
                 {{ t('wm_angle_diag_neg') }}
@@ -101,8 +106,8 @@
                 type="button" 
                 @click="setAngle(0)"
                 :class="[
-                  'py-1.5 rounded-lg font-medium transition',
-                  wmAngle === 0 ? 'bg-amber-50 text-amber-800 border border-amber-300' : 'bg-slate-100 text-slate-700'
+                  'py-2 rounded-lg font-medium transition',
+                  wmAngle === 0 ? 'bg-amber-50 text-amber-800 border border-amber-300 shadow-xs' : 'bg-slate-100 text-slate-700'
                 ]"
               >
                 {{ t('wm_angle_horiz') }}
@@ -111,8 +116,8 @@
                 type="button" 
                 @click="setAngle(45)"
                 :class="[
-                  'py-1.5 rounded-lg font-medium transition',
-                  wmAngle === 45 ? 'bg-amber-50 text-amber-800 border border-amber-300' : 'bg-slate-100 text-slate-700'
+                  'py-2 rounded-lg font-medium transition',
+                  wmAngle === 45 ? 'bg-amber-50 text-amber-800 border border-amber-300 shadow-xs' : 'bg-slate-100 text-slate-700'
                 ]"
               >
                 {{ t('wm_angle_diag_pos') }}
@@ -122,7 +127,7 @@
 
           <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">{{ t('wm_color_preset') }}</label>
-            <div class="flex items-center space-x-3">
+            <div class="flex items-center space-x-3 pt-1">
               <button 
                 v-for="color in colorPresets" 
                 :key="color"
@@ -130,18 +135,18 @@
                 @click="setColor(color)"
                 :style="{ backgroundColor: color }"
                 :class="[
-                  'w-7 h-7 rounded-full ring-2 ring-offset-2 transition',
+                  'w-8 h-8 rounded-full ring-2 ring-offset-2 transition',
                   wmColor === color ? 'ring-slate-900 scale-110' : 'ring-transparent'
                 ]"
               ></button>
             </div>
           </div>
 
-          <div class="pt-4 border-t border-slate-100">
+          <div class="pt-3 border-t border-slate-100">
             <button 
               :disabled="isProcessing"
               @click="executeWatermark"
-              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center space-x-2 shadow-md disabled:opacity-50"
+              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs py-3.5 rounded-xl transition flex items-center justify-center space-x-2 shadow-md hover:shadow-amber-600/25 disabled:opacity-50 active:scale-98"
             >
               <span v-if="!isProcessing">{{ t('stamp_and_download') }}</span>
               <span v-else>Stamping...</span>
@@ -151,11 +156,13 @@
           </div>
         </div>
 
-        <!-- Live Canvas Preview -->
-        <div class="md:col-span-2 bg-slate-200/80 rounded-3xl p-6 border border-slate-300 flex flex-col items-center justify-center min-h-[400px]">
-          <span class="text-xs font-semibold text-slate-500 mb-3">{{ t('live_preview') }}</span>
-          <div class="relative bg-white shadow-xl rounded-lg overflow-hidden border border-slate-300">
-            <canvas ref="previewCanvasRef" class="max-w-full max-h-[500px] block"></canvas>
+        <!-- Right Live Canvas Preview (8 cols on lg) -->
+        <div class="lg:col-span-8 bg-slate-200/70 rounded-3xl p-6 sm:p-8 border border-slate-300/80 flex flex-col items-center justify-center min-h-[550px]">
+          <span class="text-xs font-semibold text-slate-500 mb-4 bg-white/70 px-3 py-1 rounded-full border border-slate-200/80 shadow-2xs">
+            {{ t('live_preview') }}
+          </span>
+          <div class="relative bg-white shadow-xl rounded-xl overflow-hidden border border-slate-300/80 flex items-center justify-center">
+            <canvas ref="previewCanvasRef" class="max-w-full max-h-[620px] object-contain block"></canvas>
           </div>
         </div>
 
@@ -204,7 +211,7 @@ async function loadFile(file) {
   try {
     const pdf = await pdfjsLib.getDocument({ data: docBytes.value }).promise;
     const page1 = await pdf.getPage(1);
-    const viewport = page1.getViewport({ scale: 1.0 });
+    const viewport = page1.getViewport({ scale: 1.2 });
 
     page1Canvas = document.createElement('canvas');
     const ctx = page1Canvas.getContext('2d');
@@ -226,6 +233,11 @@ function setAngle(deg) {
 function setColor(hex) {
   wmColor.value = hex;
   renderPreview();
+}
+
+function reset() {
+  docBytes.value = null;
+  page1Canvas = null;
 }
 
 function renderPreview() {

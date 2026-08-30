@@ -1,6 +1,6 @@
 <template>
-  <section class="tool-panel">
-    <div class="mb-6 text-center max-w-xl mx-auto">
+  <section class="tool-panel w-full">
+    <div class="mb-5 text-center max-w-xl mx-auto">
       <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{{ t('split_title') }}</h2>
       <p class="text-sm text-slate-600 mt-1">{{ t('split_desc') }}</p>
     </div>
@@ -12,7 +12,7 @@
       @dragleave.prevent="isDragOver = false"
       @drop.prevent="onDrop"
       :class="[
-        'border-2 border-dashed rounded-3xl p-10 text-center transition cursor-pointer shadow-xs max-w-2xl mx-auto bg-white',
+        'border-2 border-dashed rounded-3xl p-12 text-center transition cursor-pointer shadow-xs max-w-3xl mx-auto bg-white',
         isDragOver ? 'border-emerald-500 bg-emerald-50/50' : 'border-slate-300 hover:border-emerald-500'
       ]"
       @click="fileInputRef.click()"
@@ -31,7 +31,7 @@
       <p class="text-xs text-slate-500 mt-1">{{ t('split_drop_subtitle') }}</p>
       <button 
         type="button" 
-        class="mt-4 inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm"
+        class="mt-4 inline-flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition shadow-sm"
       >
         <FileUp class="w-4 h-4" />
         <span>{{ t('btn_choose_pdf') }}</span>
@@ -39,7 +39,7 @@
     </div>
 
     <!-- Split Workspace -->
-    <div v-else>
+    <div v-else class="w-full">
       <div class="bg-white rounded-2xl border border-slate-200 p-5 mb-6 shadow-xs flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
         <div class="flex-1 w-full">
           <label class="block text-xs font-bold text-slate-700 mb-1">{{ t('custom_page_range') }}</label>
@@ -75,12 +75,12 @@
       </div>
 
       <!-- Thumbnail Grid -->
-      <div v-if="isLoading" class="py-16 text-center text-xs text-slate-500 font-medium">
-        <Loader2 class="w-6 h-6 animate-spin mx-auto mb-2 text-emerald-600" />
+      <div v-if="isLoading" class="py-20 text-center text-xs text-slate-500 font-medium">
+        <Loader2 class="w-7 h-7 animate-spin mx-auto mb-3 text-emerald-600" />
         <span>Generating previews...</span>
       </div>
 
-      <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+      <div v-else class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7 gap-4">
         <div 
           v-for="page in pages" 
           :key="page.index"
@@ -103,7 +103,7 @@
               <span v-if="selectedIndices.has(page.index)">✓</span>
             </div>
           </div>
-          <div class="overflow-hidden rounded-lg border border-slate-100 flex items-center justify-center bg-slate-50 w-full h-36 pointer-events-none">
+          <div class="overflow-hidden rounded-lg border border-slate-100 flex items-center justify-center bg-slate-50 w-full h-44 pointer-events-none">
             <img :src="page.dataUrl" class="max-h-full max-w-full object-contain">
           </div>
         </div>
@@ -172,7 +172,7 @@ async function loadFile(file) {
 
     for (let i = 1; i <= totalPages.value; i++) {
       const page = await pdf.getPage(i);
-      const viewport = page.getViewport({ scale: 0.4 });
+      const viewport = page.getViewport({ scale: 0.5 });
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = viewport.width;

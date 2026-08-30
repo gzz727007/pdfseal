@@ -1,6 +1,6 @@
 <template>
-  <section class="tool-panel">
-    <div class="mb-6 text-center max-w-xl mx-auto">
+  <section class="tool-panel w-full">
+    <div class="mb-5 text-center max-w-xl mx-auto">
       <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">{{ t('organize_title') }}</h2>
       <p class="text-sm text-slate-600 mt-1">{{ t('organize_desc') }}</p>
     </div>
@@ -12,7 +12,7 @@
       @dragleave.prevent="isDragOver = false"
       @drop.prevent="onDrop"
       :class="[
-        'border-2 border-dashed rounded-3xl p-10 text-center transition cursor-pointer shadow-xs max-w-2xl mx-auto bg-white',
+        'border-2 border-dashed rounded-3xl p-12 text-center transition cursor-pointer shadow-xs max-w-3xl mx-auto bg-white',
         isDragOver ? 'border-indigo-500 bg-indigo-50/50' : 'border-slate-300 hover:border-indigo-500'
       ]"
       @click="fileInputRef.click()"
@@ -31,7 +31,7 @@
       <p class="text-xs text-slate-500 mt-1">{{ t('organize_drop_subtitle') }}</p>
       <button 
         type="button" 
-        class="mt-4 inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-4 py-2 rounded-xl transition shadow-sm"
+        class="mt-4 inline-flex items-center space-x-2 bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-5 py-2.5 rounded-xl transition shadow-sm"
       >
         <FileUp class="w-4 h-4" />
         <span>{{ t('btn_choose_pdf') }}</span>
@@ -39,27 +39,27 @@
     </div>
 
     <!-- Workspace -->
-    <div v-else>
+    <div v-else class="w-full">
       <!-- Control Toolbar -->
       <div class="bg-white rounded-2xl border border-slate-200 p-4 mb-6 shadow-xs flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center space-x-3">
-          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-2.5 py-1 rounded-lg">
+          <span class="text-xs bg-indigo-50 text-indigo-700 font-bold px-3 py-1.5 rounded-lg border border-indigo-200">
             {{ pages.length }} {{ t('pages_total') }}
           </span>
-          <span class="text-xs font-medium text-slate-600 truncate max-w-xs">{{ filename }}</span>
+          <span class="text-xs font-medium text-slate-600 truncate max-w-md">{{ filename }}</span>
         </div>
 
         <div class="flex items-center space-x-2">
           <button 
             @click="rotateAllPages(90)" 
-            class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3 py-1.5 rounded-lg transition flex items-center space-x-1"
+            class="text-xs bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium px-3.5 py-2 rounded-xl transition flex items-center space-x-1.5 shadow-xs"
           >
             <RotateCw class="w-3.5 h-3.5" />
             <span>{{ t('rotate_all_90') }}</span>
           </button>
           <button 
             @click="reset" 
-            class="text-xs text-rose-600 hover:bg-rose-50 font-medium px-3 py-1.5 rounded-lg transition"
+            class="text-xs text-rose-600 hover:bg-rose-50 font-medium px-3.5 py-2 rounded-xl transition"
           >
             {{ t('btn_reset_file') }}
           </button>
@@ -67,13 +67,13 @@
       </div>
 
       <!-- Loading State -->
-      <div v-if="isLoading" class="py-16 text-center text-xs text-slate-500 font-medium">
-        <Loader2 class="w-6 h-6 animate-spin mx-auto mb-2 text-indigo-600" />
+      <div v-if="isLoading" class="py-20 text-center text-xs text-slate-500 font-medium">
+        <Loader2 class="w-7 h-7 animate-spin mx-auto mb-3 text-indigo-600" />
         <span>Rendering page thumbnails...</span>
       </div>
 
-      <!-- Thumbnail Grid -->
-      <div v-else ref="gridRef" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 min-h-[200px]">
+      <!-- Thumbnail Grid (Wide Responsive Columns) -->
+      <div v-else ref="gridRef" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 2xl:grid-cols-7 gap-4 min-h-[250px]">
         <div 
           v-for="(p, idx) in pages" 
           :key="p.pageIndex"
@@ -87,20 +87,20 @@
               <button 
                 @click.stop="rotatePage(idx, 90)" 
                 title="Rotate 90° Clockwise" 
-                class="p-1 hover:bg-slate-100 rounded-md text-slate-600"
+                class="p-1 hover:bg-slate-100 rounded-md text-slate-600 transition"
               >
                 <RotateCw class="w-3.5 h-3.5" />
               </button>
               <button 
                 @click.stop="deletePage(idx)" 
                 title="Delete Page" 
-                class="p-1 hover:bg-rose-50 text-slate-400 hover:text-rose-600 rounded-md"
+                class="p-1 hover:bg-rose-50 text-slate-400 hover:text-rose-600 rounded-md transition"
               >
                 <Trash2 class="w-3.5 h-3.5" />
               </button>
             </div>
           </div>
-          <div class="overflow-hidden rounded-lg border border-slate-100 flex items-center justify-center bg-slate-50 w-full h-44">
+          <div class="overflow-hidden rounded-lg border border-slate-100 flex items-center justify-center bg-slate-50 w-full h-48">
             <img 
               :src="p.dataUrl" 
               :style="{ transform: `rotate(${p.rotation}deg)` }" 
@@ -172,7 +172,7 @@ async function loadFile(file) {
 
     for (let i = 1; i <= pdf.numPages; i++) {
       const page = await pdf.getPage(i);
-      const viewport = page.getViewport({ scale: 0.5 });
+      const viewport = page.getViewport({ scale: 0.6 });
       const canvas = document.createElement('canvas');
       const ctx = canvas.getContext('2d');
       canvas.width = viewport.width;

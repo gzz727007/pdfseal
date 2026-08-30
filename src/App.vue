@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col justify-between">
+  <div class="min-h-screen flex flex-col justify-between bg-slate-50 text-slate-800 font-sans selection:bg-blue-500 selection:text-white">
     <!-- Offline Bar -->
     <div 
       v-if="!isOnline" 
@@ -15,14 +15,14 @@
       @open-feedback="isFeedbackOpen = true" 
     />
 
-    <!-- Main Workspace -->
-    <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+    <!-- Main Workspace (Expanded Max Width) -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
       <KeepAlive>
         <component :is="activeToolComponent" />
       </KeepAlive>
     </main>
 
-    <!-- Footer -->
+    <!-- Ultra-Slim Minimalist Footer -->
     <Footer @open-feedback="isFeedbackOpen = true" />
 
     <!-- Feedback Modal -->
@@ -46,7 +46,7 @@ import WatermarkTool from './tools/WatermarkTool.vue';
 import SanitizeTool from './tools/SanitizeTool.vue';
 import { t } from './i18n';
 
-const activeTab = ref('merge');
+const activeTab = ref('watermark'); // Keep active on the tool user tested or default to merge
 const isFeedbackOpen = ref(false);
 const isOnline = ref(navigator.onLine);
 

@@ -39,7 +39,7 @@
     </div>
 
     <!-- Workspace -->
-    <div v-else class="max-w-2xl mx-auto bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
+    <div v-else class="max-w-4xl mx-auto bg-white rounded-3xl border border-slate-200 p-6 shadow-sm">
       <div class="flex items-center justify-between pb-4 border-b border-slate-100">
         <div>
           <h4 class="font-bold text-slate-900 text-sm">{{ t('detected_metadata') }}</h4>
