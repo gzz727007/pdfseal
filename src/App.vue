@@ -11,7 +11,7 @@
     <!-- Header Navbar -->
     <Navbar 
       :active-tab="activeTab" 
-      @switch-tab="activeTab = $event" 
+      @switch-tab="switchTool" 
       @open-feedback="isFeedbackOpen = true" 
     />
 
@@ -46,10 +46,6 @@ import WatermarkTool from './tools/WatermarkTool.vue';
 import SanitizeTool from './tools/SanitizeTool.vue';
 import { t } from './i18n';
 
-const activeTab = ref('watermark'); // Keep active on the tool user tested or default to merge
-const isFeedbackOpen = ref(false);
-const isOnline = ref(navigator.onLine);
-
 const toolComponents = {
   merge: MergeTool,
   organize: OrganizeTool,
@@ -58,18 +54,48 @@ const toolComponents = {
   sanitize: SanitizeTool,
 };
 
+// Sync active tab with URL hash for Cloudflare Web Analytics tracking & bookmarking
+function getInitialTab() {
+  const hash = window.location.hash.replace('#', '').toLowerCase();
+  if (toolComponents[hash]) return hash;
+  return 'merge';
+}
+
+const activeTab = ref(getInitialTab());
+const isFeedbackOpen = ref(false);
+const isOnline = ref(navigator.onLine);
+
 const activeToolComponent = computed(() => toolComponents[activeTab.value] || MergeTool);
+
+function switchTool(tabId) {
+  activeTab.value = tabId;
+  window.location.hash = `#${tabId}`;
+}
+
+function onHashChange() {
+  const hash = window.location.hash.replace('#', '').toLowerCase();
+  if (toolComponents[hash] && activeTab.value !== hash) {
+    activeTab.value = hash;
+  }
+}
 
 function updateOnlineStatus() {
   isOnline.value = navigator.onLine;
 }
 
 onMounted(() => {
+  window.addEventListener('hashchange', onHashChange);
   window.addEventListener('online', updateOnlineStatus);
   window.addEventListener('offline', updateOnlineStatus);
+  
+  // Ensure hash is set on first load if missing
+  if (!window.location.hash) {
+    window.location.hash = `#${activeTab.value}`;
+  }
 });
 
 onUnmounted(() => {
+  window.removeEventListener('hashchange', onHashChange);
   window.removeEventListener('online', updateOnlineStatus);
   window.removeEventListener('offline', updateOnlineStatus);
 });
