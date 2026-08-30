@@ -7,7 +7,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 [![Privacy: 100% Client-Side](https://img.shields.io/badge/Privacy-100%25%20Local-green.svg)](#privacy-guarantee)
-[![Ko-fi](https://img.shields.io/badge/Buy%20a%20Fish-Ko--fi-ff5f5f.svg)](https://ko-fi.com/)
+[![Ko-fi](https://img.shields.io/badge/Buy%20a%20Fish-Ko--fi-ff5f5f.svg)](https://ko-fi.com/muffin27)
 
 </div>
 
@@ -50,7 +50,7 @@ Why **PDFSeal**? In English, **"Seal"** has a charming double meaning:
 ## 🐟 Support Sammy (Buy the Seal a Fish / Coffee!)
 PDFSeal is 100% free and open-source. If this tool saved you \$15/month in subscription fees or 30 minutes of frustration:
 
-👉 **[Feed the little seal a fish / Buy a coffee on Ko-fi ☕ 🐟](https://ko-fi.com/)**
+👉 **[Feed the little seal a fish / Buy a coffee on Ko-fi ☕ 🐟](https://ko-fi.com/muffin27)**
 
 Your support helps keep PDFSeal ad-free, independent, and continuously updated!
 
